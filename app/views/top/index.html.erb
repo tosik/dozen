@@ -19,6 +19,7 @@
 				add_async(goal, function()
 				{
 					console.debug("ok");
+          location.reload();
 				});
 			}
 
@@ -33,6 +34,7 @@
 				edit_async(goal, function()
 				{
 					console.debug("ok");
+          location.reload();
 				});
 			}
 
@@ -42,6 +44,7 @@
 				remove_async(id, function()
 				{
 					console.debug("ok");
+          location.reload();
 				});
 			}
 
@@ -87,6 +90,14 @@
 		<a href="#" onclick="Editor.add($('goal_description'), $('goal_term'))">登録</a>
 		</p>
 
+		<div>
+			<% (0..@goals.size-1).each do |i| %>
+				<span style="font-size:<%= @levels[i] + 12 %>px">
+					<%= @goals[i].description %>
+				</span>
+			<% end %>
+		</div>
+
 		<ul>
 			<% @goals.each do |goal| %>
 				<li><%= goal.description %>
@@ -95,12 +106,5 @@
 			<% end %>
 		</ul>
 
-		<div>
-			<% (0..@goals.size-1).each do |i| %>
-				<span style="font-size:<%= @levels[i] + 12 %>px">
-					<%= @goals[i].description %>
-				</span>
-			<% end %>
-		</div>
 	</body>
 </html>
