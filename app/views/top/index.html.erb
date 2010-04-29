@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title>dozen - 曖昧目標管理ツール「土善」</title>
+		<%= javascript_include_tag :defaults %>
+	</head>
+	<body>
+		<script language="javascript">
+
+			function Goal() {};
+			function add(description_elem, term_elem)
+			{
+				var goal = new Goal;
+				goal.description = description_elem.value;
+				goal.term = term_elem.value;
+				console.debug(goal);
+
+				add_async(goal, function()
+				{
+					console.debug("ok");
+				});
+			}
+
+			function add_async(goal, callback)
+			{
+				new Ajax.Request(
+					"/editor/add",
+					{
+						method: "post",
+						parameters: "description=" + goal.description + "&term=" + goal.term,
+						onComplete: callback
+					});
+			}
+		</script>
+
+		<h1>dozen - 曖昧目標管理ツール「土善」</h1>
+
+		<input type="text" size="30" id="goal_description" />
+		<input type="text" size="3"  id="goal_term" />
+		<a href="#" onclick="add($('goal_description'), $('goal_term'))">登録</a>
+
+		<ul>
+			<% @goals.each do |goal| %>
+				<li><%= goal.description %> : <%= goal.term.strftime("%Y年%m月ごろ") %></li>
+			<% end %>
+		</ul>
+	</body>
+</html>
