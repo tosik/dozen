@@ -7,7 +7,9 @@
 		<script language="javascript">
 
 			function Goal() {};
-			function add(description_elem, term_elem)
+      var Editor = {};
+
+			Editor.add = function(description_elem, term_elem)
 			{
 				var goal = new Goal;
 				goal.description = description_elem.value;
@@ -15,6 +17,29 @@
 				console.debug(goal);
 
 				add_async(goal, function()
+				{
+					console.debug("ok");
+				});
+			}
+
+			Editor.edit = function(id, description_elem, term_elem)
+			{
+				var goal = new Goal;
+				goal.description = description_elem.value;
+				goal.term = term_elem.value;
+				goal.id = id;
+				console.debug(goal);
+
+				edit_async(goal, function()
+				{
+					console.debug("ok");
+				});
+			}
+
+			Editor.remove = function(id)
+			{
+        console.debug(id);
+				remove_async(id, function()
 				{
 					console.debug("ok");
 				});
@@ -30,6 +55,28 @@
 						onComplete: callback
 					});
 			}
+
+			function edit_async(goal, callback)
+			{
+				new Ajax.Request(
+					"/editor/edit",
+					{
+						method: "post",
+						parameters: "description=" + goal.description + "&term=" + goal.term + "&id=" + goal.id,
+						onComplete: callback
+					});
+			}
+
+			function remove_async(id, callback)
+			{
+				new Ajax.Request(
+					"/editor/remove",
+					{
+						method: "post",
+						parameters: "id=" + id,
+						onComplete: callback
+					});
+			}
 		</script>
 
 		<h1>dozen - 曖昧目標管理ツール「土善」</h1>
@@ -40,7 +87,9 @@
 
 		<ul>
 			<% @goals.each do |goal| %>
-				<li><%= goal.description %> : <%= goal.term.strftime("%Y年%m月ごろ") %></li>
+        <li><%= goal.description %>
+        : <%= goal.term.strftime("%Y年%m月ごろ") %>
+        <a href="#" onclick="Editor.remove(<%= goal.id %>)">[削除]</a></li>
 			<% end %>
 		</ul>
 	</body>
