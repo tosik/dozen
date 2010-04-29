@@ -3,7 +3,7 @@ class EditorController < ApplicationController
   def add
     goal = Goal.create(
       :description=>params[:description],
-      :term=> Time.now + dayToTime(params[:term].to_i)
+      :term=> (DateTime.now >> params[:term].to_f * 12)
     )
 
     goal.new_record?
@@ -18,11 +18,7 @@ class EditorController < ApplicationController
   def edit
     goal = Goal.find(params[:id])
     goal.description = params[:description]
-    goal.term = Time.now + dayToTime(params[:term].to_i)
+    goal.term = (DateTime.now >> params[:term].to_f * 12)
   end
 
-end
-
-def dayToTime(day)
-  day * 24*60*60
 end

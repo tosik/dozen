@@ -7,7 +7,7 @@
 		<script language="javascript">
 
 			function Goal() {};
-      var Editor = {};
+			var Editor = {};
 
 			Editor.add = function(description_elem, term_elem)
 			{
@@ -38,7 +38,7 @@
 
 			Editor.remove = function(id)
 			{
-        console.debug(id);
+				console.debug(id);
 				remove_async(id, function()
 				{
 					console.debug("ok");
@@ -81,16 +81,26 @@
 
 		<h1>dozen - 曖昧目標管理ツール「土善」</h1>
 
-		<input type="text" size="30" id="goal_description" />
-		<input type="text" size="3"  id="goal_term" />
-		<a href="#" onclick="add($('goal_description'), $('goal_term'))">登録</a>
+		<p>
+		<input type="text" size="30" id="goal_description" /> を
+		<input type="text" size="3"  id="goal_term" /> 年後に
+		<a href="#" onclick="Editor.add($('goal_description'), $('goal_term'))">登録</a>
+		</p>
 
 		<ul>
 			<% @goals.each do |goal| %>
-        <li><%= goal.description %>
-        : <%= goal.term.strftime("%Y年%m月ごろ") %>
-        <a href="#" onclick="Editor.remove(<%= goal.id %>)">[削除]</a></li>
+				<li><%= goal.description %>
+				: <%= goal.term.strftime("%Y年%m月ごろ") %>
+				<a href="#" onclick="Editor.remove(<%= goal.id %>)">[削除]</a></li>
 			<% end %>
 		</ul>
+
+		<div>
+			<% (0..@goals.size-1).each do |i| %>
+				<span style="font-size:<%= @levels[i] + 12 %>px">
+					<%= @goals[i].description %>
+				</span>
+			<% end %>
+		</div>
 	</body>
 </html>
