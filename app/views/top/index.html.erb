@@ -14,11 +14,9 @@
 				var goal = new Goal;
 				goal.description = description_elem.value;
 				goal.term = term_elem.value;
-				console.debug(goal);
 
 				add_async(goal, function()
 				{
-					console.debug("ok");
           location.reload();
 				});
 			}
@@ -29,21 +27,17 @@
 				goal.description = description_elem.value;
 				goal.term = term_elem.value;
 				goal.id = id;
-				console.debug(goal);
 
 				edit_async(goal, function()
 				{
-					console.debug("ok");
           location.reload();
 				});
 			}
 
 			Editor.remove = function(id)
 			{
-				console.debug(id);
 				remove_async(id, function()
 				{
-					console.debug("ok");
           location.reload();
 				});
 			}
