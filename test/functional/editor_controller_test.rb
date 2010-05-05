@@ -1,8 +1,10 @@
 require 'test_helper'
 
 class EditorControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "add" do
+    post :add,
+      :description => "This is description",
+      :term => DateTime.now
+    assert_response :success
   end
 end
